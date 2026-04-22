@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+import os
+import glob
+import shutil
+
+def distro():
+	try:
+		with open("/etc/os-release") as f:
+			for line in f:
+				if line.startswith("PRETTY_NAME="):
+					return line.split("=", 1)[1].strip().strip('"')
+	except:
+		pass
+	return "unknown"
+
+def init():
+	try:
+		return os.path.basename(os.readlink("/proc/1/exe"))
+	except:
+		return "unknown"
+
+def boot():
+	if os.path.exists("/boot/grub") or os.path.exists("/etc/default/grub"):
+		return "grub"
+	if glob.glob("/boot/loader/entries/*.conf"):
+		return "systemd-boot"
+	return "unknown"
+
+def main():
+	d = distro()
+	i = init()
+	b = boot()
+	root = os.geteuid() == 0
+	systemd_ok = shutil.which("systemctl") and i == "systemd"
+
+	print("=== System Environment ===")
+	print("")
+	print("env:")
+	print(f"  distro: {d}")
+	print(f"  init: {i}")
+	print(f"  boot: {b}")
+	print(f"  root: {'yes' if root else 'no'}")
+	print(f" systemd: {'yes' if systemd_ok else 'no'}")
+	print("")
+	print("note: basic env check only")
+
+if __name__ == "__main__":
+	main()
+	
