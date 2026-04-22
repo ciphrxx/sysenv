@@ -1,16 +1,16 @@
 # sysenv
 CLI utility to show linux environment info:
--distro
--init system
--bootloader guess
--root status
--systemd availability
+- distro
+- init system
+- bootloader guess
+- root status
+- systemd availability
 
-# usage
+## usage
 run:
 sysenv
 
-#install
+## install
 make executable:
 chmod +x sysenv
 
