@@ -16,6 +16,12 @@ def distro():
 
 def init():
 	try:
+#		return os.path.basename(os.readlink("/proc/1/exe"))
+		with open("/proc/1/comm") as f:
+			return f.read().strip()
+	except:
+		pass
+	try:
 		return os.path.basename(os.readlink("/proc/1/exe"))
 	except:
 		return "unknown"
