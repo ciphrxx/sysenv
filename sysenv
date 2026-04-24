@@ -43,15 +43,12 @@ def main():
 
 	print("=== System Environment ===")
 	print("")
-	print("env:")
-	print(f"  distro: {d}")
-	print(f"  init: {i}")
-	print(f"  boot: {b}")
-	print(f"  kernel: {kernel}")
-	print(f"  root: {'yes' if root else 'no'}")
-	print(f" systemd: {'yes' if systemd_ok else 'no'}")
-	print("")
-	print("note: basic env check only")
+	print(f"  {'distro':<9} {d}")
+	print(f"  {'init':<9} {i}")
+	print(f"  {'boot':<9} {b}")
+	print(f"  {'kernel':<9} {kernel}")
+	print(f"  {'root':<9} {'yes' if root else 'no'}")
+	print(f"  {'systemd':<9} {'yes' if systemd_ok else 'no'}")
 
 if __name__ == "__main__":
 	main()
