@@ -37,6 +37,7 @@ def main():
 	d = distro()
 	i = init()
 	b = boot()
+	kernel = os.uname().release
 	root = os.geteuid() == 0
 	systemd_ok = shutil.which("systemctl") and i == "systemd"
 
@@ -46,6 +47,7 @@ def main():
 	print(f"  distro: {d}")
 	print(f"  init: {i}")
 	print(f"  boot: {b}")
+	print(f"  kernel: {kernel}")
 	print(f"  root: {'yes' if root else 'no'}")
 	print(f" systemd: {'yes' if systemd_ok else 'no'}")
 	print("")
