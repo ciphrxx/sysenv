@@ -33,10 +33,20 @@ def boot():
 		return "systemd-boot"
 	return "unknown"
 
+def virt():
+	try:
+		out = os.popen("systemd-detect-virt").read().strip()
+		if not out or out == "none":
+			return "bare metal"
+		return out
+	except:
+		return "unknown"
+
 def main():
 	d = distro()
 	i = init()
 	b = boot()
+	v = virt()
 	kernel = os.uname().release
 	root = os.geteuid() == 0
 	systemd_ok = shutil.which("systemctl") and i == "systemd"
@@ -47,6 +57,7 @@ def main():
 	print(f"  {'init':<9} {i}")
 	print(f"  {'boot':<9} {b}")
 	print(f"  {'kernel':<9} {kernel}")
+	print(f"  {'virt' :<9} {v}")
 	print(f"  {'root':<9} {'yes' if root else 'no'}")
 	print(f"  {'systemd':<9} {'yes' if systemd_ok else 'no'}")
 
