@@ -3,6 +3,7 @@
 import os
 import glob
 import shutil
+import socket
 
 def distro():
 	try:
@@ -42,17 +43,25 @@ def virt():
 	except:
 		return "unknown"
 
+def host():
+	try:
+		return socket.gethostname()
+	except:
+		return "unknown"
+
 def main():
 	d = distro()
 	i = init()
 	b = boot()
 	v = virt()
+	h = host()
 	kernel = os.uname().release
 	root = os.geteuid() == 0
 	systemd_ok = shutil.which("systemctl") and i == "systemd"
 
 	print("=== System Environment ===")
 	print("")
+	print(f"  {'host':<9} {h}")
 	print(f"  {'distro':<9} {d}")
 	print(f"  {'init':<9} {i}")
 	print(f"  {'boot':<9} {b}")
